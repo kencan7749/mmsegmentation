@@ -31,7 +31,7 @@ class LoadMultiImageFromFile(object):
 
     def __init__(self,
                  to_float32=False,
-                 color_type='color',
+                 color_type='unchanged',
                  file_client_args=dict(backend='disk'),
                  imdecode_backend='cv2'):
         self.to_float32 = to_float32
@@ -64,7 +64,7 @@ class LoadMultiImageFromFile(object):
                 filename = results['img_info']['filename']
             img_bytes = self.file_client.get(filename)
             img = mmcv.imfrombytes(
-                img_bytes, flag=self.color_type, backend=self.imdecode_backend)
+               img_bytes, flag=self.color_type, backend=self.imdecode_backend)
             if self.to_float32:
                 img = img.astype(np.float32)
 
