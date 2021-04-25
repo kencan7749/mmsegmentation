@@ -30,7 +30,7 @@ class LoadMultiImageFromFile(object):
     """
 
     def __init__(self,
-                 to_float32=False,
+                 to_float32=True,
                  color_type='unchanged',
                  file_client_args=dict(backend='disk'),
                  imdecode_backend='cv2'):
