@@ -25,11 +25,11 @@ class ParticleDataset(Dataset):
         │   ├── my_dataset
         │   │   ├── img_dir
         │   │   │   ├── train
-            │   │   │   │──0
+            │   │   │   │──first_range
             │   │   │   │   ├── xxx{img_suffix}
             │   │   │   │   ├── yyy{img_suffix}
             │   │   │   │   ├── zzz{img_suffix}
-                        |──1
+                        |──first_intensity
 
         │   │   │   ├── val
         │   │   ├── ann_dir
@@ -50,7 +50,6 @@ class ParticleDataset(Dataset):
     Args:
         pipeline (list[dict]): Processing pipeline
         img_dir (str): Path to image directory
-        img_dir_num (int): Integer number describing img_dir for input
         img_suffix (str): Suffix of images. Default: '.jpg'
         ann_dir (str, optional): Path to annotation directory. Default: None
         seg_map_suffix (str): Suffix of segmentation maps. Default: '.png'
@@ -78,7 +77,6 @@ class ParticleDataset(Dataset):
     def __init__(self,
                  pipeline,
                  img_dir,
-                 img_dir_num=2,
                  #img_suffix='.jpg',
                  img_suffix='.png',
                  ann_dir=None,
@@ -92,7 +90,6 @@ class ParticleDataset(Dataset):
                  palette=None):
         self.pipeline = Compose(pipeline)
         self.img_dir = img_dir
-        #self.img_dir_list = img_dir
         self.img_suffix = img_suffix
         self.ann_dir = ann_dir
         self.seg_map_suffix = seg_map_suffix
