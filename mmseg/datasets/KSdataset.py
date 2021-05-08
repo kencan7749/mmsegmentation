@@ -92,7 +92,7 @@ class ParticleDataset(Dataset):
                  palette=None):
         self.pipeline = Compose(pipeline)
         self.img_dir = img_dir
-        self.img_dir_list = img_dir
+        #self.img_dir_list = img_dir
         self.img_suffix = img_suffix
         self.ann_dir = ann_dir
         self.seg_map_suffix = seg_map_suffix
@@ -109,7 +109,9 @@ class ParticleDataset(Dataset):
         if self.data_root is not None:
             if not osp.isabs(self.img_dir):
                 self.img_base_dir = osp.join(self.data_root, self.img_dir)
-                self.img_dir = osp.join(self.data_root, self.img_dir,'0')
+                img_dir_name_list = os.listdir(self.img_base_dir)
+                
+                self.img_dir = osp.join(self.data_root, self.img_dir,img_dir_name_list[0])
                 
             if not (self.ann_dir is None or osp.isabs(self.ann_dir)):
                 self.ann_dir = osp.join(self.data_root, self.ann_dir)
@@ -117,7 +119,7 @@ class ParticleDataset(Dataset):
                 self.split = osp.join(self.data_root, self.split)
 
         # load annotations
-        self.img_dir_list = [osp.join(self.img_base_dir, str(n)) for n in range(img_dir_num)]
+        self.img_dir_list = [osp.join(self.img_base_dir, dir_name) for dir_name in img_dir_name_list]
         self.img_infos = self.load_annotations(self.img_dir, self.img_suffix,
                                                self.ann_dir,
                                                self.seg_map_suffix, self.split)
