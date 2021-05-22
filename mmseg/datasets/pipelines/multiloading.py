@@ -69,9 +69,12 @@ class LoadMultiImageFromFile(object):
                 img = img.astype(np.float32)
 
             #concat img
+            if len(img.shape) ==2:
+                img = img[...,np.newaxis]
             if i==0:
                 img_concat = img 
             else:
+                
                 img_concat = np.concatenate([img_concat, img], axis=2)
 
         img = img_concat
