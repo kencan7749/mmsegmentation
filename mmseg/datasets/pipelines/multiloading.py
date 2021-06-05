@@ -78,7 +78,7 @@ class LoadMultiImageFromFile(object):
                 img_concat = np.concatenate([img_concat, img], axis=2)
 
         img = img_concat
-        print(img.shape)
+        #print(img.shape)
         results['filename'] = filename
         results['ori_filename'] = results['img_info']['filename']
         results['img'] = img

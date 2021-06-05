@@ -70,7 +70,7 @@ class ParticleDataset(Dataset):
             Default: None
     """
 
-    CLASSES = None
+    CLASSES = ('None', 'Particle', 'Object', 'Particled_Object')
 
     PALETTE = None
 

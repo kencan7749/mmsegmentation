@@ -135,13 +135,13 @@ def main():
 
     datasets = [build_dataset(cfg.data.train)]
     #img num
-    img_num = len(dataset.img_dir_list)
+    img_num = len(datasets[0].img_dir_list)
     #extract first layer weight
     model_weight_dict = model.state_dict()
     fl_key = list(model_weight_dict.keys())[0]
     #change first lyaer to match multi images (dirty)
-    if cfg.filename == 'configs/unet/deeplabv3_unet_s5-d16_64x64_40k_particle_detection_KS.py':
-        model.backbone.encoder[0][0].convs[0].conv.weight =  torch.cat([model_weight_dict[fl_key]]*img_num, axis=1)
+    if cfg.filename == 'configs/unet/deeplabv3_unet_s5-d16_64x64_40k_rain_filtering.py':
+        model.backbone.encoder[0][0].convs[0].conv.weight =  torch.nn.#torch.cat([model_weight_dict[fl_key]]*2, axis=1)
     else:
         raise Exception('Currently not implemeted')
     logger.info(model)
