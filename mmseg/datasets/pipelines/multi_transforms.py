@@ -42,7 +42,9 @@ class MultiNormalize(object):
         for i in range(img_num):
             # Extract one image
             img = imgs[...,3*i:3*(i+1)]
-            img = mmcv.imnormalize(img, self.mean, self.std,
+            mean = self.mean[3*i:3*(i+1)]
+            std = self.std[3*i:3*(i+1)]
+            img = mmcv.imnormalize(img, mean, std,
                                     self.to_rgb)
             #concat img
             if i==0:

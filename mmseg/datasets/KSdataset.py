@@ -77,6 +77,8 @@ class ParticleDataset(Dataset):
     def __init__(self,
                  pipeline,
                  img_dir,
+                 img_dir_name_list = ['first_depth', 'first_intensity', 'first_return_type',
+                                      'last_depth', 'last_intensity', 'last_return_type'],
                  #img_suffix='.jpg',
                  img_suffix='.png',
                  ann_dir=None,
@@ -90,6 +92,7 @@ class ParticleDataset(Dataset):
                  palette=None):
         self.pipeline = Compose(pipeline)
         self.img_dir = img_dir
+        self.img_dir_name_list = img_dir_name_list
         self.img_suffix = img_suffix
         self.ann_dir = ann_dir
         self.seg_map_suffix = seg_map_suffix
@@ -106,7 +109,7 @@ class ParticleDataset(Dataset):
         if self.data_root is not None:
             if not osp.isabs(self.img_dir):
                 self.img_base_dir = osp.join(self.data_root, self.img_dir)
-                img_dir_name_list = os.listdir(self.img_base_dir)
+                img_dir_name_list = self.img_dir_name_list#os.listdir(self.img_base_dir)
                 
                 self.img_dir = osp.join(self.data_root, self.img_dir,img_dir_name_list[0])
                 

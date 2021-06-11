@@ -1,38 +1,48 @@
 # dataset settings
 dataset_type = "ParticleDataset"#'Particle_detection'
 data_root ="/var/datasets/rain_filtering/"
+#img_norm_cfg = dict(
+#    mean=[5639.599, 8.842542, 5.8830953], std=[8.12876, 0.98039263, 1.000016], to_rgb=True)
 img_norm_cfg = dict(
-    mean=[5639.599, 8.842542, 5.8830953], std=[8.12876, 0.98039263, 1.000016], to_rgb=True)
-crop_size = (512, 1024)
+    mean=[5038.093, 8.658958, 5.960323, 6241.105,
+       9.026124, 5.805868], std=[2592.0776, 5.1905198, 1.5205307, 2186.4004,
+       5.1824026, 1.6501048], to_rgb=False) #False since each image are loaded gray
+crop_size = (32, 32)
+img_scale = (40, 1800)
 train_pipeline = [
     dict(type='LoadMultiImageFromFile'),
     dict(type='LoadAnnotations'),
-    dict(type='Resize', img_scale=(512,32), ratio_range=(0.5, 2.0)),
-    dict(type='RandomCrop', crop_size=crop_size, cat_max_ratio=0.75),
+    dict(type='RandomCrop', crop_size=crop_size, cat_max_ratio=1.0),
     dict(type='RandomFlip', prob=0.5),
-    dict(type='MultiPhotoMetricDistortion'),
     dict(type='MultiNormalize', **img_norm_cfg), #muzu
     dict(type='Pad', size=crop_size, pad_val=0, seg_pad_val=255),
     dict(type='DefaultFormatBundle'),
     dict(type='Collect', keys=['img', 'gt_semantic_seg']),
 ]
+
 test_pipeline = [
+    #dict(type='LoadMultiImageFromFile'),
+    #dict(type='RandomFlip', prob=0.0),
+    #dict(type='MultiNormalize', **img_norm_cfg),
+    #dict(type='Pad', size=crop_size, pad_val=0, seg_pad_val=255),
+    #dict(type='ImageToTensor', keys=['img']),
+    #dict(type='DefaultFormatBundle'),
+    #dict(type='Collect', keys=['img',]),
+
     dict(type='LoadMultiImageFromFile'),
     dict(
         type='MultiScaleFlipAug',
-        img_scale=(512, 32),
-        #img_scale=(512, 1024),
-        #img_ratios=[0.5, 0.75, 1.0, 1.25, 1.5, 1.75],
-        img_ratios=[1.0, 1.25, 1.5, 1.75],
+        img_scale=img_scale,
+        img_ratios=[1.0],
         flip=False,
         transforms=[
-            dict(type='Resize',img_scale=(512, 32), keep_ratio=True),
-            dict(type='RandomFlip'),
+            #dict(type='Resize', keep_ratio=True),
+            dict(type='RandomFlip', prob=0.0),
             dict(type='MultiNormalize', **img_norm_cfg),
-            dict(type='Pad', size=crop_size, pad_val=0, seg_pad_val=255),
             dict(type='ImageToTensor', keys=['img']),
             dict(type='Collect', keys=['img']),
         ])
+    
 ]
 data = dict(
     samples_per_gpu=2,

@@ -62,12 +62,13 @@ class LoadMultiImageFromFile(object):
                                     results['img_info']['filename'])
             else:
                 filename = results['img_info']['filename']
+            #print(filename)
             img_bytes = self.file_client.get(filename)
             img = mmcv.imfrombytes(
                img_bytes, flag=self.color_type, backend=self.imdecode_backend)
             if self.to_float32:
                 img = img.astype(np.float32)
-
+            #print(img)
             #concat img
             if len(img.shape) ==2:
                 img = img[...,np.newaxis]
