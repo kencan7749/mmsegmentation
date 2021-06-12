@@ -1,13 +1,13 @@
 # dataset settings
-dataset_type = "ParticleDataset"#'Particle_detection'
+dataset_type = "ParticleDataset"
 data_root ="/var/datasets/rain_filtering/"
-#img_norm_cfg = dict(
-#    mean=[5639.599, 8.842542, 5.8830953], std=[8.12876, 0.98039263, 1.000016], to_rgb=True)
+#the order of mean or std should be ['first_depth', 'first_intensity', 'first_return_type',
+# 'last_depth', 'last_intensity', 'last_return_type']
 img_norm_cfg = dict(
     mean=[5038.093, 8.658958, 5.960323, 6241.105,
        9.026124, 5.805868], std=[2592.0776, 5.1905198, 1.5205307, 2186.4004,
-       5.1824026, 1.6501048], to_rgb=False) #False since each image are loaded gray
-crop_size = (32, 32)
+       5.1824026, 1.6501048], to_rgb=False) # to_rgb is False since each image are loaded gray
+crop_size = (32, 32) # crop 32x32 from 40x1800 
 img_scale = (40, 1800)
 train_pipeline = [
     dict(type='LoadMultiImageFromFile'),
@@ -21,14 +21,7 @@ train_pipeline = [
 ]
 
 test_pipeline = [
-    #dict(type='LoadMultiImageFromFile'),
-    #dict(type='RandomFlip', prob=0.0),
-    #dict(type='MultiNormalize', **img_norm_cfg),
-    #dict(type='Pad', size=crop_size, pad_val=0, seg_pad_val=255),
-    #dict(type='ImageToTensor', keys=['img']),
-    #dict(type='DefaultFormatBundle'),
-    #dict(type='Collect', keys=['img',]),
-
+    # do LoadMultiIageFromFile but it is just to use mmseg apis. (img_ratio is just 1.0)
     dict(type='LoadMultiImageFromFile'),
     dict(
         type='MultiScaleFlipAug',

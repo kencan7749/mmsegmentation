@@ -39,6 +39,9 @@ def parse_args():
         '--gpu-collect',
         action='store_true',
         help='whether to use gpu to collect results.')
+    
+    parser.add_argument(
+        '--show-original-dir', help='directory where original labeled images will be saved')
     parser.add_argument(
         '--tmpdir',
         help='tmp directory used for collecting results from multiple '
@@ -123,7 +126,7 @@ def main():
     if not distributed:
         model = MMDataParallel(model, device_ids=[0])
         outputs = single_gpu_test_multi(model, data_loader, args.show, args.show_dir,
-                                  efficient_test)
+                                       args.show_original_dir, efficient_test)
     else:
         model = MMDistributedDataParallel(
             model.cuda(),
@@ -142,6 +145,7 @@ def main():
             dataset.format_results(outputs, **kwargs)
         if args.eval:
             dataset.evaluate(outputs, args.eval, **kwargs)
+
 
 
 if __name__ == '__main__':

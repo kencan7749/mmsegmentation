@@ -1,5 +1,5 @@
 # model settings
-norm_cfg = dict(type='SyncBN', requires_grad=True)
+norm_cfg = dict(type='BN', requires_grad=True)
 model = dict(
     type='EncoderDecoder',
     pretrained=None,
@@ -8,12 +8,12 @@ model = dict(
         in_channels=6,
         base_channels=64,
         num_stages=5,
-        strides=(1, 1, 1, 1),
-        enc_num_convs=(2, 2, 2, 2),
-        dec_num_convs=(2, 2, 2),
+        strides=(1, 1, 1, 1, 1),
+        enc_num_convs=(2, 2, 2, 2, 2),
+        dec_num_convs=(2, 2, 2, 2),
         downsamples=(True, True, True, True),
-        enc_dilations=(1, 1, 1, 1),
-        dec_dilations=(1, 1, 1),
+        enc_dilations=(1, 1, 1, 1, 1),
+        dec_dilations=(1, 1, 1, 1),
         with_cp=False,
         conv_cfg=None,
         norm_cfg=norm_cfg,
@@ -41,11 +41,11 @@ model = dict(
         num_convs=1,
         concat_input=False,
         dropout_ratio=0.1,
-        num_classes=2,
+        num_classes=4,
         norm_cfg=norm_cfg,
         align_corners=False,
         loss_decode=dict(
             type='CrossEntropyLoss', use_sigmoid=False, loss_weight=0.4)),
     # model training and testing settings
     train_cfg=dict(),
-    test_cfg=dict(mode='slide', crop_size=32, stride=40))
+    test_cfg=dict(mode='whole', crop_size=32, stride=20))

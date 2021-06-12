@@ -16,8 +16,9 @@ from .pipelines import Compose
 
 @DATASETS.register_module()
 class ParticleDataset(Dataset):
-    """Custom dataset for semantic segmentation. An example of file structure
-    is as followed.
+    """Custom dataset for semantic segmentation. The input images are concatenated from 
+    various sensor images (first_range, first_return_type, last_range and so on).
+    An example of file structure is as followed.
 
     .. code-block:: none
 
@@ -39,7 +40,7 @@ class ParticleDataset(Dataset):
         │   │   │   │   ├── zzz{seg_map_suffix}
         │   │   │   ├── val
 
-    The img/gt_semantic_seg pair of CustomDataset should be of the same
+    The img/gt_semantic_seg pair of ParticleDataset should be of the same
     except suffix. A valid img/gt_semantic_seg filename pair should be like
     ``xxx{img_suffix}`` and ``xxx{seg_map_suffix}`` (extension is also included
     in the suffix). If split is given, then ``xxx`` is specified in txt file.
@@ -50,7 +51,8 @@ class ParticleDataset(Dataset):
     Args:
         pipeline (list[dict]): Processing pipeline
         img_dir (str): Path to image directory
-        img_suffix (str): Suffix of images. Default: '.jpg'
+        img_dir_name_list (list): Each element means the sensor type to concatenate (in this order)
+        img_suffix (str): Suffix of images. Default: '.png'
         ann_dir (str, optional): Path to annotation directory. Default: None
         seg_map_suffix (str): Suffix of segmentation maps. Default: '.png'
         split (str, optional): Split txt file. If split is specified, only
@@ -71,6 +73,7 @@ class ParticleDataset(Dataset):
     """
 
     CLASSES = ('None', 'Particle', 'Object', 'Particled_Object')
+    CLASSES = ('None', 'First_Sensor', 'Last_Sensor', 'Both_Sensors')
 
     PALETTE = None
 
@@ -79,8 +82,7 @@ class ParticleDataset(Dataset):
                  img_dir,
                  img_dir_name_list = ['first_depth', 'first_intensity', 'first_return_type',
                                       'last_depth', 'last_intensity', 'last_return_type'],
-                 #img_suffix='.jpg',
-                 img_suffix='.png',
+                 img_suffix='.png', #img_suffix='.jpg',
                  ann_dir=None,
                  seg_map_suffix='.png',
                  split=None,
@@ -109,8 +111,8 @@ class ParticleDataset(Dataset):
         if self.data_root is not None:
             if not osp.isabs(self.img_dir):
                 self.img_base_dir = osp.join(self.data_root, self.img_dir)
-                img_dir_name_list = self.img_dir_name_list#os.listdir(self.img_base_dir)
-                
+                img_dir_name_list = self.img_dir_name_list
+                # in order to use the mmsegmenation module, img_dir refers the first sensor image
                 self.img_dir = osp.join(self.data_root, self.img_dir,img_dir_name_list[0])
                 
             if not (self.ann_dir is None or osp.isabs(self.ann_dir)):
@@ -184,10 +186,11 @@ class ParticleDataset(Dataset):
     def pre_pipeline(self, results):
         """Prepare results dict for pipeline."""
         results['seg_fields'] = []
+        # Change from the default
         #results['img_prefix'] = self.img_dir
         results['img_prefix'] = self.img_base_dir
         results['seg_prefix'] = self.ann_dir
-        #Add KS for multiple list
+        #Added by KS for multiple list
         results['img_prefix_list'] = self.img_dir_list
         if self.custom_classes:
             results['label_map'] = self.label_map

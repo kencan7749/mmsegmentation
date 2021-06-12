@@ -9,7 +9,7 @@ from .hrf import HRFDataset
 from .pascal_context import PascalContextDataset
 from .stare import STAREDataset
 from .voc import PascalVOCDataset
-from .KSdataset import ParticleDataset
+from .concat_image_dataset import ParticleDataset
 
 __all__ = [
     'CustomDataset', 'build_dataloader', 'ConcatDataset', 'RepeatDataset',

@@ -10,6 +10,22 @@ import torch.distributed as dist
 from mmcv.image import tensor2imgs
 from mmcv.runner import get_dist_info
 
+import os
+from PIL import Image
+
+def create_rain_filter_sensor_image(image, sensor_type='first'):
+    
+    #no_signal = image == 0
+    both_signal = image == 3
+    if sensor_type =='first':
+        signal = image == 1
+    elif sensor_type=='last':
+        signal = image == 2
+    sensor_ind = signal + both_signal
+    sensor_image= np.zeros(sensor_ind.shape)
+    sensor_image[sensor_ind] = 255
+    return sensor_image
+    
 
 def np2tmp(array, temp_file_name=None):
     """Save ndarray to local numpy file.
@@ -35,6 +51,7 @@ def single_gpu_test_multi(model,
                     data_loader,
                     show=False,
                     out_dir=None,
+                    out_original_label_dir=None,
                     efficient_test=False):
     """Test with single GPU.
 
@@ -44,6 +61,9 @@ def single_gpu_test_multi(model,
         show (bool): Whether show results during infernece. Default: False.
         out_dir (str, optional): If specified, the results will be dumped into
             the directory to save output results.
+        out_original_label_dir (str, optional): If specified, the predicted label images 
+            will be transformed into original sensor labels and save into the directory.
+            Currently, it will support only for ParticleDataset.
         efficient_test (bool): Whether save the results as local numpy files to
             save CPU memory during evaluation. Default: False.
 
@@ -88,6 +108,27 @@ def single_gpu_test_multi(model,
                     palette=dataset.PALETTE,
                     show=show,
                     out_file=out_file)
+                if out_original_label_dir:
+                    ##save first and last sensor label images
+                    #create directory 
+                    out_first_dir = osp.join(out_original_label_dir,'first')
+                    os.makedirs(out_first_dir, exist_ok=True)
+                    out_first_file= osp.join(out_first_dir, img_meta['ori_filename'])
+                    #save first
+                    original_label = create_rain_filter_sensor_image(result[0], 'first')
+                    original_image = Image.fromarray(np.uint8(original_label))
+                    original_image.save(out_first_file)
+
+                    #create directory
+                    out_last_dir = osp.join(out_original_label_dir,'last')
+                    os.makedirs(out_last_dir, exist_ok=True)
+                    out_last_file= osp.join(out_last_dir, img_meta['ori_filename'])
+                    # save last
+                    original_label = create_rain_filter_sensor_image(result[0], 'last')
+                    original_image = Image.fromarray(np.uint8(original_label))
+                    original_image.save(out_last_file)
+
+
 
         if isinstance(result, list):
             if efficient_test:
