@@ -20,32 +20,43 @@ class ParticleDataset(Dataset):
     various sensor images (first_range, first_return_type, last_range and so on).
     An example of file structure is as followed.
 
-    .. code-block:: none
-
-        ├── data
-        │   ├── my_dataset
-        │   │   ├── img_dir
-        │   │   │   ├── train
-            │   │   │   │──first_range
-            │   │   │   │   ├── xxx{img_suffix}
-            │   │   │   │   ├── yyy{img_suffix}
-            │   │   │   │   ├── zzz{img_suffix}
-                        |──first_intensity
-
-        │   │   │   ├── val
-        │   │   ├── ann_dir
-        │   │   │   ├── train
-        │   │   │   │   ├── xxx{seg_map_suffix}
-        │   │   │   │   ├── yyy{seg_map_suffix}
-        │   │   │   │   ├── zzz{seg_map_suffix}
-        │   │   │   ├── val
+    ├── data
+    │    │   ├── my_dataset
+    │    │   │   ├── img_dir
+    │    │   │   │   ├── train
+    │    │   │   │   │   │──first_depth
+    │    │   │   │   │   │   ├── xxx{img_suffix}
+    │    │   │   │   │   │   ├── yyy{img_suffix}
+    │    │   │   │   │   │   ├── zzz{img_suffix}
+    │    │   │   │   │   |──first_intensity
+    │    │   │   │   │   │   ├── xxx{img_suffix}
+    │    │   │   │   │   │   ├── yyy{img_suffix}
+    │    │   │   │   │   │   ├── zzz{img_suffix}
+    │    │   │   │   │   |──first_return_type
+    │    │   │   │   │   │   ├── xxx{img_suffix}
+    │    │   │   │   │   │   ├── yyy{img_suffix}
+    │    │   │   │   │   │   ├── zzz{img_suffix}
+    │    │   │   │   │   │──last_depth
+    │    │   │   │   │   │   ├── xxx{img_suffix}
+    │    │   │   │   │   │   ├── ...
+    │    │   │   │   │   │──...
+    │    │   │   │   ├── val
+    │    │   │   │   │   │──first_depth
+    │    │   │   │   │   │   ├── xxx{img_suffix}
+    │    │   │   │   │   │   ├── ...
+    │    │   │   │   │   │──...
+    │    │   │   ├── ann_dir
+    │    │   │   │   ├── train
+    │    │   │   │   │   ├── xxx{seg_map_suffix}
+    │    │   │   │   │   ├── yyy{seg_map_suffix}
+    │    │   │   │   │   ├── zzz{seg_map_suffix}
+    │    │   │   │   ├── val
 
     The img/gt_semantic_seg pair of ParticleDataset should be of the same
     except suffix. A valid img/gt_semantic_seg filename pair should be like
     ``xxx{img_suffix}`` and ``xxx{seg_map_suffix}`` (extension is also included
     in the suffix). If split is given, then ``xxx`` is specified in txt file.
     Otherwise, all files in ``img_dir/``and ``ann_dir`` will be loaded.
-    Please refer to ``docs/tutorials/new_dataset.md`` for more details.
 
 
     Args:

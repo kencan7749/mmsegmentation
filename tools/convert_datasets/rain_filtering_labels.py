@@ -13,10 +13,10 @@ def create_mmseg_labels(label_root_dir, label_list,image_list,save_root_dir):
     Created and save labels for mmsegmentation.
     Loaded label images (ranged 0-255) then regenerate labels accorging to their values (ranged 0 -num_classes -1).
     For rain_filtering dataset,
-    0... nothing
-    1... particle (based on first images)
-    2... object (based on last images)
-    3... particle and object (intersect between first and last)
+    0... none (both the first and last sensor are 0)
+    1... First_Sensor (only the first sensor is 1)
+    2... Last_Sensor (only the last sensor is 1)
+    3... Both_Sensors (Both the first and last sensors are 1)
     The label images are saved as png file as 'P' mode.
     
     Arguments:
@@ -47,10 +47,11 @@ def create_label(label_root_dir, label_list, img_file):
     Return: 
         img_array: np.array: image shape, whose values are ranged  (ranged 0 -num_classes -1).
         For rain_filtering datasets,
-        0... nothing
-        1... particle (based on first images)
-        2... object (based on last images)
-        3... particle and object (intersect between first and last)
+        0... none (both the first and last sensor are 0)
+        1... First_Sensor (only the first sensor is 1)
+        2... Last_Sensor (only the last sensor is 1)
+        3... Both_Sensors (Both the first and last sensors are 1)
+        The label images are saved as png file as 'P' mode.
     """
     lbl_img_list = []
     for label in label_list:

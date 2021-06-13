@@ -41,7 +41,7 @@ def parse_args():
         help='whether to use gpu to collect results.')
     
     parser.add_argument(
-        '--show-original-dir', help='directory where original labeled images will be saved')
+        '--show-original-dir', help='directory where original-type predicted labeled images will be saved')
     parser.add_argument(
         '--tmpdir',
         help='tmp directory used for collecting results from multiple '
@@ -124,10 +124,12 @@ def main():
         efficient_test = args.eval_options.get('efficient_test', False)
 
     if not distributed:
+        #for concatenated (multi) image input.
         model = MMDataParallel(model, device_ids=[0])
         outputs = single_gpu_test_multi(model, data_loader, args.show, args.show_dir,
                                        args.show_original_dir, efficient_test)
     else:
+        #currently did not support for multi image
         model = MMDistributedDataParallel(
             model.cuda(),
             device_ids=[torch.cuda.current_device()],
