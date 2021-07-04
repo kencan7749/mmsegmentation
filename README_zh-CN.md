@@ -4,14 +4,14 @@
 <br />
 
 [![PyPI](https://img.shields.io/pypi/v/mmsegmentation)](https://pypi.org/project/mmsegmentation)
-[![docs](https://img.shields.io/badge/docs-latest-blue)](https://mmsegmentation.readthedocs.io/en/latest/)
+[![docs](https://img.shields.io/badge/docs-latest-blue)](https://mmsegmentation.readthedocs.io/zh_CN/latest/)
 [![badge](https://github.com/open-mmlab/mmsegmentation/workflows/build/badge.svg)](https://github.com/open-mmlab/mmsegmentation/actions)
 [![codecov](https://codecov.io/gh/open-mmlab/mmsegmentation/branch/master/graph/badge.svg)](https://codecov.io/gh/open-mmlab/mmsegmentation)
 [![license](https://img.shields.io/github/license/open-mmlab/mmsegmentation.svg)](https://github.com/open-mmlab/mmsegmentation/blob/master/LICENSE)
 [![issue resolution](https://isitmaintained.com/badge/resolution/open-mmlab/mmsegmentation.svg)](https://github.com/open-mmlab/mmsegmentation/issues)
 [![open issues](https://isitmaintained.com/badge/open/open-mmlab/mmsegmentation.svg)](https://github.com/open-mmlab/mmsegmentation/issues)
 
-文档: https://mmsegmentation.readthedocs.io/
+文档: https://mmsegmentation.readthedocs.io/zh_CN/latest
 
 [English](README.md) | 简体中文
 
@@ -52,51 +52,55 @@ MMSegmentation 是一个基于 PyTorch 的语义分割开源工具箱。它是 O
 
 ## 基准测试和模型库
 
-测试结果和模型可以在[模型库](docs/model_zoo.md)中找到。
+测试结果和模型可以在[模型库](docs_zh-CN/model_zoo.md)中找到。
 
 已支持的骨干网络：
 
-- [x] ResNet
-- [x] ResNeXt
-- [x] [HRNet](configs/hrnet/README.md)
-- [x] [ResNeSt](configs/resnest/README.md)
-- [x] [MobileNetV2](configs/mobilenet_v2/README.md)
-- [x] [MobileNetV3](configs/mobilenet_v3/README.md)
+- [x] ResNet (CVPR'2016)
+- [x] ResNeXt (CVPR'2017)
+- [x] [HRNet (CVPR'2019)](configs/hrnet)
+- [x] [ResNeSt (ArXiv'2020)](configs/resnest)
+- [x] [MobileNetV2 (CVPR'2018)](configs/mobilenet_v2)
+- [x] [MobileNetV3 (ICCV'2019)](configs/mobilenet_v3)
+- [x] [Vision Transformer (ICLR'2021)](configs/vit)
+- [x] [Swin Transformer (arXiV'2021)](configs/swin)
 
 已支持的算法：
 
-- [x] [FCN](configs/fcn)
-- [x] [PSPNet](configs/pspnet)
-- [x] [DeepLabV3](configs/deeplabv3)
-- [x] [PSANet](configs/psanet)
-- [x] [DeepLabV3+](configs/deeplabv3plus)
-- [x] [UPerNet](configs/upernet)
-- [x] [NonLocal Net](configs/nonlocal_net)
-- [x] [EncNet](configs/encnet)
-- [x] [CCNet](configs/ccnet)
-- [x] [DANet](configs/danet)
-- [x] [APCNet](configs/apcnet)
-- [x] [GCNet](configs/gcnet)
-- [x] [DMNet](configs/dmnet)
-- [x] [ANN](configs/ann)
-- [x] [OCRNet](configs/ocrnet)
-- [x] [Fast-SCNN](configs/fastscnn)
-- [x] [Semantic FPN](configs/sem_fpn)
-- [x] [PointRend](configs/point_rend)
-- [x] [EMANet](configs/emanet)
-- [x] [DNLNet](configs/dnlnet)
-- [x] [CGNet](configs/cgnet)
-- [x] [Mixed Precision (FP16) Training](configs/fp16/README.md)
+- [x] [FCN (CVPR'2015/TPAMI'2017)](configs/fcn)
+- [x] [UNet (MICCAI'2016/Nat. Methods'2019)](configs/unet)
+- [x] [PSPNet (CVPR'2017)](configs/pspnet)
+- [x] [DeepLabV3 (ArXiv'2017)](configs/deeplabv3)
+- [x] [Mixed Precision (FP16) Training (ArXiv'2017)](configs/fp16)
+- [x] [PSANet (ECCV'2018)](configs/psanet)
+- [x] [DeepLabV3+ (CVPR'2018)](configs/deeplabv3plus)
+- [x] [UPerNet (ECCV'2018)](configs/upernet)
+- [x] [NonLocal Net (CVPR'2018)](configs/nonlocal_net)
+- [x] [EncNet (CVPR'2018)](configs/encnet)
+- [x] [Semantic FPN (CVPR'2019)](configs/sem_fpn)
+- [x] [DANet (CVPR'2019)](configs/danet)
+- [x] [APCNet (CVPR'2019)](configs/apcnet)
+- [x] [EMANet (ICCV'2019)](configs/emanet)
+- [x] [CCNet (ICCV'2019)](configs/ccnet)
+- [x] [DMNet (ICCV'2019)](configs/dmnet)
+- [x] [ANN (ICCV'2019)](configs/ann)
+- [x] [GCNet (ICCVW'2019/TPAMI'2020)](configs/gcnet)
+- [x] [Fast-SCNN (ArXiv'2019)](configs/fastscnn)
+- [x] [OCRNet (ECCV'2020)](configs/ocrnet)
+- [x] [DNLNet (ECCV'2020)](configs/dnlnet)
+- [x] [PointRend (CVPR'2020)](configs/point_rend)
+- [x] [CGNet (TIP'2020)](configs/cgnet)
+- [x] [SETR (CVPR'2021)](configs/setr)
 
 ## 安装
 
-请参考[快速入门文档](docs/get_started.md#installation)进行安装和数据集准备。
+请参考[快速入门文档](docs_zh-CN/get_started.md#installation)进行安装和数据集准备。
 
 ## 快速入门
 
-请参考[训练教程](docs/train.md)和[测试教程](docs/inference.md)学习 MMSegmentation 的基本使用。
-我们也提供了一些进阶教程，内容覆盖了[增加自定义数据集](docs/tutorials/customize_datasets.md)，[设计新的数据预处理流程](docs/tutorials/data_pipeline.md)，[增加自定义模型](docs/tutorials/customize_models.md)，[增加自定义的运行时配置](docs/tutorials/customize_runtime.md)。
-除此之外，我们也提供了很多实用的[训练技巧说明](docs/tutorials/training_tricks.md)。
+请参考[训练教程](docs_zh-CN/train.md)和[测试教程](docs_zh-CN/inference.md)学习 MMSegmentation 的基本使用。
+我们也提供了一些进阶教程，内容覆盖了[增加自定义数据集](docs_zh-CN/tutorials/customize_datasets.md)，[设计新的数据预处理流程](docs_zh-CN/tutorials/data_pipeline.md)，[增加自定义模型](docs_zh-CN/tutorials/customize_models.md)，[增加自定义的运行时配置](docs_zh-CN/tutorials/customize_runtime.md)。
+除此之外，我们也提供了很多实用的[训练技巧说明](docs_zh-CN/tutorials/training_tricks.md)。
 
 同时，我们提供了 Colab 教程。你可以在[这里](demo/MMSegmentation_Tutorial.ipynb)浏览教程，或者直接在 Colab 上[运行](https://colab.research.google.com/github/open-mmlab/mmsegmentation/blob/master/demo/MMSegmentation_Tutorial.ipynb)。
 
@@ -132,3 +136,24 @@ MMSegmentation 是一个由来自不同高校和企业的研发人员共同参�
 - [MMTracking](https://github.com/open-mmlab/mmtracking): OpenMMLab 一体化视频目标感知平台
 - [MMPose](https://github.com/open-mmlab/mmpose): OpenMMLab 姿态估计工具箱
 - [MMEditing](https://github.com/open-mmlab/mmediting): OpenMMLab 图像视频编辑工具箱
+- [MMOCR](https://github.com/open-mmlab/mmocr): OpenMMLab 全流程文字检测识别理解工具包
+- [MMGeneration](https://github.com/open-mmlab/mmgeneration): OpenMMLab 生成模型工具箱
+
+## 欢迎加入 OpenMMLab 社区
+
+ 扫描下方的二维码可关注 OpenMMLab 团队的 [知乎官方账号](https://www.zhihu.com/people/openmmlab)，加入 OpenMMLab 团队的 [官方交流 QQ 群](https://jq.qq.com/?_wv=1027&k=aCvMxdr3)
+
+ <div align="center">
+ <img src="docs_zh-CN/imgs/zhihu_qrcode.jpg" height="400" />  <img src="docs_zh-CN/imgs/qq_group_qrcode.jpg" height="400" />
+ </div>
+
+ 我们会在 OpenMMLab 社区为大家
+
+- 📢 分享 AI 框架的前沿核心技术
+- 💻 解读 PyTorch 常用模块源码
+- 📰 发布 OpenMMLab 的相关新闻
+- 🚀 介绍 OpenMMLab 开发的前沿算法
+- 🏃 获取更高效的问题答疑和意见反馈
+- 🔥 提供与各行各业开发者充分交流的平台
+
+ 干货满满 📘，等你来撩 💗，OpenMMLab 社区期待您的加入 👬

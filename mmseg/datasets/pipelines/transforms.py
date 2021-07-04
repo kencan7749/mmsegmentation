@@ -14,7 +14,7 @@ class Resize(object):
     contains the key "scale", then the scale in the input dict is used,
     otherwise the specified scale in the init method is used.
 
-    ``img_scale`` can be Nong, a tuple (single-scale) or a list of tuple
+    ``img_scale`` can be None, a tuple (single-scale) or a list of tuple
     (multi-scale). There are 4 multiscale modes:
 
     - ``ratio_range is not None``:
@@ -32,10 +32,13 @@ class Resize(object):
 
     Args:
         img_scale (tuple or list[tuple]): Images scales for resizing.
+            Default:None.
         multiscale_mode (str): Either "range" or "value".
-        ratio_range (tuple[float]): (min_ratio, max_ratio)
+            Default: 'range'
+        ratio_range (tuple[float]): (min_ratio, max_ratio).
+            Default: None
         keep_ratio (bool): Whether to keep the aspect ratio when resizing the
-            image.
+            image. Default: True
     """
 
     def __init__(self,
@@ -89,7 +92,7 @@ class Resize(object):
         Args:
             img_scales (list[tuple]): Images scale range for sampling.
                 There must be two tuples in img_scales, which specify the lower
-                and uper bound of image scales.
+                and upper bound of image scales.
 
         Returns:
             (tuple, None): Returns a tuple ``(img_scale, None)``, where
