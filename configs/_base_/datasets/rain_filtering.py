@@ -1,6 +1,6 @@
 # dataset settings
 dataset_type = "ParticleDataset"
-data_root ="/var/datasets/rain_filtering/"
+data_root ="data/rain_filtering_v2"#"/var/datasets/rain_filtering/"
 #the order of mean or std should be ['first_depth', 'first_intensity', 'first_return_type',
 # 'last_depth', 'last_intensity', 'last_return_type']
 img_norm_cfg = dict(
