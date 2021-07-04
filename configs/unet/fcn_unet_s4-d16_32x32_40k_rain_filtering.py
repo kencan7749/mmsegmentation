@@ -3,6 +3,6 @@ _base_ = [
     '../_base_/default_runtime.py', '../_base_/schedules/schedule_40k.py'
 ]
 model = dict(test_cfg=dict(mode='whole',crop_size=(32, 32), stride=(20, 20)))
-evaluation = dict(metric='mDice')
+#evaluation = dict(metric='mDice')#dict(metric='mIoU')#
 
 cudnn_benchmark = False
